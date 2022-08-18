@@ -6,7 +6,7 @@ pipeline {
     stage ('Git Checkout') {
       git 'https://github.com/ddsperera/webapp.git'    
     }
-  }
+  
     
      stage ('Send Dockerfile to Ansible Server') {
       steps {
@@ -35,5 +35,5 @@ pipeline {
        }
     }
      }
-  
+  }
 }
