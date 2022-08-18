@@ -4,7 +4,9 @@ pipeline {
   
   stages {
     stage ('Git Checkout') {
-      git 'https://github.com/ddsperera/webapp.git'    
+      steps {
+      git 'https://github.com/ddsperera/webapp.git' 
+      }
     }
   
     
