@@ -1,18 +1,13 @@
 pipeline {
   agent any 
-  tools {
-    maven 'Maven'
   }
   
   stages {
-    stage ('Initialize') {
-      steps {
-        sh '''
-                    echo "PATH = ${PATH}"
-                    echo "M2_HOME = ${M2_HOME}"
-            ''' 
-      }
+    stage ('Git Checkout') {
+      git 
+    
     }
+  }
     
      stage ('Send Dockerfile to Ansible Server') {
       steps {
