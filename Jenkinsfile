@@ -18,7 +18,7 @@ pipeline {
       steps {
         sshagent(['Ansible-server']) {
         sh 'ssh -o StrictHostKeyChecking=no root@172.31.22.30'
-        sh 'scp /var/lib/jenkins/workspace/devsecops-pipeline/* root@172.31.22.30:/home/ubuntu'
+        sh 'scp /var/lib/jenkins/workspace/devsecops-pipeline/Dockerfile root@172.31.22.30:/home/ubuntu'
        }
     }
      }
