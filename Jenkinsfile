@@ -32,11 +32,12 @@ pipeline {
     }
      }
     
-    stage ('Build Docker Image') {
+    stage ('Tag Docker Image') {
         steps {
         sshagent(['Ansible-server']) {
         sh 'ssh -o StrictHostKeyChecking=no root@172.31.22.30 cd /home/ubuntu/'
-        sh 'scp /var/lib/jenkins/workspace/devsecops-pipeline/Dockerfile root@172.31.22.30 docker image build -t $JOB_NAME:v1.$BUILD_ID .'
+        sh 'scp /var/lib/jenkins/workspace/devsecops-pipeline/Dockerfile root@172.31.22.30 docker image tag -t $JOB_NAME:v1.$BUILD_ID ddsperera/$JOB_NAME:v1.$BUILD_ID'
+        sh 'scp /var/lib/jenkins/workspace/devsecops-pipeline/Dockerfile root@172.31.22.30 docker image tag -t $JOB_NAME:v1.$BUILD_ID ddsperera/$JOB_NAME:latest'  
        }
     }
      }
