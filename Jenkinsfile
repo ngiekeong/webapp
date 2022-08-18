@@ -21,7 +21,7 @@ pipeline {
         sh 'scp /var/lib/jenkins/workspace/devsecops-pipeline/* ubuntu@172.31.22.30:/home/ubuntu'
        }
     }
-    
+     }
     
     
   }
