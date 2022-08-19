@@ -23,7 +23,7 @@ pipeline {
         steps {
         sshagent(['Ansible-server']) {
         sh 'ssh -o StrictHostKeyChecking=no root@172.31.22.30 cd /home/ubuntu/'
-        sh 'ssh -o StrictHostKeyChecking=no root@172.31.22.30 docker image build -t $JOB_NAME:v1.$BUILD_ID .'
+        sh 'ssh -o StrictHostKeyChecking=no root@172.31.22.30 docker image build . -t $JOB_NAME:v1.$BUILD_ID '
        }
     }
      }
