@@ -9,5 +9,4 @@ jobs:
         uses: zaproxy/action-baseline@v0.6.1
         with:
           target: 'http:54.173.108.164:8080/webapp/'
-          rules_file_name: '.zap/rules.tsv'
-          cmd_options: '-a'
+          
