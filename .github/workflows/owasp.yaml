@@ -12,9 +12,7 @@ jobs:
       - name: ZAP Scan
         uses: zaproxy/action-full-scan@v0.4.0
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          docker_name: 'http:54.173.108.164:8080/webapp/'
-          target: 'https://www.zaproxy.org/'
+          target: 'http:54.173.108.164:8080/webapp/'
           rules_file_name: '.zap/rules.tsv'
           cmd_options: '-a'
          
