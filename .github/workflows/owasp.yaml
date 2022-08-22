@@ -2,11 +2,20 @@ on: [push]
 
 jobs:
   zap_scan:
-      runs-on: ubuntu-latest
-      name: Scan the web application
-      steps:
-       - name: Zap Scan
-         uses: zaproxy/action-baseline@v0.4.0
-         with:
-          target: 'http:54.173.108.164:8080/webapp/'
-          
+    runs-on: ubuntu-latest
+    name: Scan the webapplication
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: master
+      - name: ZAP Scan
+        uses: zaproxy/action-full-scan@v0.4.0
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          docker_name: 'http:54.173.108.164:8080/webapp/'
+          target: 'https://www.zaproxy.org/'
+          rules_file_name: '.zap/rules.tsv'
+          cmd_options: '-a'
+         
+       
