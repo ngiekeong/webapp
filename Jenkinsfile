@@ -21,6 +21,26 @@ pipeline {
       }
     }
     
+     stage ('Source Composition Analysis') {
+      steps {
+         sh 'rm owasp* || true'
+         sh 'wget "https://raw.githubusercontent.com/ddsperera/webapp/master/owasp-dependency-check.sh" '
+         sh 'chmod +x owasp-dependency-check.sh'
+         sh 'bash owasp-dependency-check.sh'
+         sh 'cat /var/lib/jenkins/OWASP-Dependency-Check/reports/dependency-check-report.xml'
+        
+      }
+    }
+    
+    stage ('SAST') {
+      steps {
+        withSonarQubeEnv('sonar') {
+          sh 'mvn sonar:sonar'
+          sh 'cat target/sonar/report-task.txt'
+        }
+      }
+    }
+    
    
     
     stage ('Build') {
@@ -32,9 +52,17 @@ pipeline {
     stage ('Deploy-To-Tomcat') {
             steps {
            sshagent(['tomcat']) {
-                sh 'scp -o StrictHostKeyChecking=no target/*.war ubuntu@54.173.108.164:/home/ubuntu/prod/apache-tomcat-8.5.82/webapps/webapp.war'
+                sh 'scp -o StrictHostKeyChecking=no target/*.war ubuntu@54.90.148.114:/home/ubuntu/apache-tomcat-8.5.82/webapps/webapp.war'
               }      
            }       
+    }
+    
+    stage ('DAST') {
+      steps {
+        sshagent(['DAST-server']) {
+         sh 'ssh -o  StrictHostKeyChecking=no ubuntu@100.26.52.82 "docker run -t owasp/zap2docker-stable zap-baseline.py -t http://54.90.148.114:8080/webapp/" || true'
+        }
+      }
     }
     
     
